@@ -313,8 +313,10 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 #ARCH		?= $(SUBARCH)
 #CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
 ARCH            ?= arm64
-CROSS_COMPILE   ?= $(srctree)/toolchain/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+#CROSS_COMPILE   ?= $(srctree)/toolchain/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
 #CROSS_COMPILE   ?= ../PLATFORM/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+CROSS_COMPILE   ?= 
+
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
 SRCARCH 	:= $(ARCH)
@@ -377,7 +379,8 @@ LD		= $(CROSS_COMPILE)ld
 LDGOLD		= $(CROSS_COMPILE)ld.gold
 #CC		= $(CROSS_COMPILE)gcc
 #CC		= ../PLATFORM/prebuilts/clang/host/linux-x86/clang-4639204/bin/clang
-CC              = $(srctree)/toolchain/clang/host/linux-x86/clang-4639204/bin/clang
+#CC		= $(srctree)/toolchain/clang/host/linux-x86/clang-4639204/bin/clang
+CC	       ?= clang
 CPP		= $(CC) -E
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm
@@ -511,9 +514,9 @@ endif
 
 ifeq ($(cc-name),clang)
 ifneq ($(CROSS_COMPILE),)
-#CLANG_TRIPLE	?= $(CROSS_COMPILE)
+CLANG_TRIPLE	?= $(CROSS_COMPILE)
 #CLANG_TRIPLE	?= ../PLATFORM/prebuilts/clang/host/linux-x86/clang-4639204/bin/aarch64-linux-gnu-
-CLANG_TRIPLE	?= $(srctree)/toolchain/clang/host/linux-x86/clang-4639204/bin/aarch64-linux-gnu-
+#CLANG_TRIPLE	?= $(srctree)/toolchain/clang/host/linux-x86/clang-4639204/bin/aarch64-linux-gnu-
 CLANG_FLAGS	:= --target=$(notdir $(CLANG_TRIPLE:%-=%))
 ifeq ($(shell $(srctree)/scripts/clang-android.sh $(CC) $(CLANG_FLAGS)), y)
 $(error "Clang with Android --target detected. Did you specify CLANG_TRIPLE?")
