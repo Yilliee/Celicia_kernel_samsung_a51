@@ -238,7 +238,6 @@ source security/integrity/Kconfig
 source security/samsung/five/Kconfig
 source security/proca/Kconfig
 source security/samsung/dsms/Kconfig
-source security/samsung/defex_lsm/Kconfig
 
 choice
 	prompt "Default security module"
