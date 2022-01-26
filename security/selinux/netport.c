@@ -239,8 +239,10 @@ static __init int sel_netport_init(void)
 	int iter;
 
 // [ SEC_SELINUX_PORTING_COMMON
-#ifdef CONFIG_ALWAYS_ENFORCE
+#ifdef CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCING
 	selinux_enabled = 1;
+#elif defined(CONFIG_SECURITY_SELINUX_ALWAYS_PERMISSIVE)
+	selinux_enabled = 0;
 #endif
 // ] SEC_SELINUX_PORTING_COMMON
 
