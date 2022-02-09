@@ -421,6 +421,12 @@ CONFIG_SOC_EXYNOS9610=y
 CONFIG_ARCH_EXYNOS9=y
 
 #
+# Dtbo
+#
+# CONFIG_DTBO_A51 is not set
+CONFIG_DTBO_M21=y
+
+#
 # Bus support
 #
 # CONFIG_PCI is not set
