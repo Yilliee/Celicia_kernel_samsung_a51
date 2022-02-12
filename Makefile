@@ -318,6 +318,7 @@ ARCH            ?= arm64
 #CROSS_COMPILE   ?= $(srctree)/toolchain/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
 #CROSS_COMPILE   ?= ../PLATFORM/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
 CROSS_COMPILE   ?= 
+ANDROID_MAJOR_VERSION ?= r
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
