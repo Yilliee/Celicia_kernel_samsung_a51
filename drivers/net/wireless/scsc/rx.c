@@ -291,6 +291,7 @@ static int slsi_extract_mbssids(struct slsi_dev *sdev, struct netdev_vif *ndev_v
 	int current_rssi;
 	u16 current_freq;
 	size_t mgmt_len;
+	int count = 0;
 
 	mgmt_len = fapi_get_mgmtlen(skb);
 	current_rssi =  fapi_get_s16(skb, u.mlme_scan_ind.rssi);
@@ -323,6 +324,11 @@ static int slsi_extract_mbssids(struct slsi_dev *sdev, struct netdev_vif *ndev_v
 			const u8 *ssid_ie;
 			int ssid_len = 0;
 
+			count++;
+			if (count > 127) {
+				SLSI_INFO_NODEV("Infinite Loop\n");
+				break;
+			}
 			if (sub_elem[0] != 0 || sub_elem[1] < 4) {
 				/* not a valid BSS profile */
 				continue;
@@ -423,8 +429,16 @@ static int slsi_populate_ssid_info(struct slsi_dev *sdev, struct netdev_vif *nde
 	struct ieee80211_mgmt *mgmt = NULL;
 	struct slsi_scan_result *scan_result = ndev_vif->scan[scan_id].scan_results;
 	struct slsi_ssid_info *ssid_info;
+	int max_count, scanresultcount = 0;
+
+	max_count  = slsi_dev_get_scan_result_count();
 
 	while (scan_result) {
+		scanresultcount++;
+		if (scanresultcount >= max_count) {
+			SLSI_ERR_NODEV("Scan Result More than Max Scan Result Count!!\n");
+			break;
+		}
 		if (scan_result->beacon) {
 			beacon_probe_skb = scan_result->beacon;
 		} else if (scan_result->probe_resp) {
@@ -766,7 +780,7 @@ void slsi_rx_beacon_reporting_event_ind(struct slsi_dev *sdev, struct net_device
 	else
 		SLSI_ERR(sdev, "received abort_event unsupporting reason(%u)\n", reason_code);
 
-	ret = slsi_send_forward_beacon_abort_vendor_event(sdev, reason_code);
+	ret = slsi_send_forward_beacon_abort_vendor_event(sdev, dev, reason_code);
 	if (ret)
 		SLSI_ERR(sdev, "Failed to send forward_beacon_abort_event(err=%d)\n", ret);
 	kfree_skb(skb);
@@ -806,9 +820,8 @@ void slsi_handle_wips_beacon(struct slsi_dev *sdev, struct net_device *dev, stru
 		      fapi_get_mgmt(skb)->bssid, beacon_int, timestamp,
 		      (u64)TIMESPEC_TO_US(sys_time));
 
-	ret = slsi_send_forward_beacon_vendor_event(sdev, scan_ssid, ssid_len, scan_bssid,
-						    channel, beacon_int, timestamp,
-						    (u64)TIMESPEC_TO_US(sys_time));
+	ret = slsi_send_forward_beacon_vendor_event(sdev, dev, scan_ssid, ssid_len, scan_bssid,
+						    channel, beacon_int, timestamp,  (u64)TIMESPEC_TO_US(sys_time));
 	if (ret)
 		SLSI_ERR(sdev, "Failed to forward beacon_event\n");
 }

@@ -70,7 +70,7 @@
 
 #include <trace/events/task.h>
 
-#ifdef CONFIG_RKP_NS_PROT
+#if 0 /* def CONFIG_RKP_NS_PROT */
 #include "mount.h"
 #endif
 
@@ -1256,7 +1256,7 @@ void __set_task_comm(struct task_struct *tsk, const char *buf, bool exec)
 	perf_event_comm(tsk, exec);
 }
 
-#ifdef CONFIG_RKP_NS_PROT
+#if 0 /* def CONFIG_RKP_NS_PROT */
 extern struct super_block *rootfs_sb;
 extern struct super_block *sys_sb;
 extern struct super_block *vendor_sb;
@@ -1390,7 +1390,7 @@ int flush_old_exec(struct linux_binprm * bprm)
 	 * Release all of the old mmap stuff
 	 */
 	acct_arg_size(bprm, 0);
-#ifdef CONFIG_RKP_NS_PROT
+#if 0 /* def CONFIG_RKP_NS_PROT */
 	if (rkp_cred_enable &&
 		is_rkp_priv_task() &&
 		invalid_drive(bprm)) {

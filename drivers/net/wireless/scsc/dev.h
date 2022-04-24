@@ -1272,6 +1272,7 @@ struct slsi_dev {
 	int                        netdev_up_count;
 	struct net_device          __rcu *netdev[CONFIG_SCSC_WLAN_MAX_INTERFACES + 1];               /* 0 is reserved */
 	struct net_device          __rcu *netdev_ap;
+	struct net_device          __rcu *netdev_p2p;
 	u8                         netdev_addresses[CONFIG_SCSC_WLAN_MAX_INTERFACES + 1][ETH_ALEN];  /* 0 is reserved */
 	bool                       require_vif_delete[CONFIG_SCSC_WLAN_MAX_INTERFACES + 1];
 	int                        device_state;
@@ -1453,7 +1454,9 @@ struct slsi_dev {
 	u8                         latency_param_mask;
 	bool                       detect_vif_active;
 	bool                       max_dtim_recv;
+#ifndef SCSC_SEP_VERSION
 	bool                       forced_se_7;
+#endif
 	bool                       igmp_offload_activated;
 	int                        default_scan_ies_len;
 	u8                         *default_scan_ies;

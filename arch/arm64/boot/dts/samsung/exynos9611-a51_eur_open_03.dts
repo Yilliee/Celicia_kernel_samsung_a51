@@ -2819,6 +2819,28 @@
 						};
 					};
 				};
+
+				boot_device@4 {
+					net_boost,label = "WIFI TX";
+					net_boost,node = "wlan0";
+
+					net_boost,table {
+
+						level_0 {
+							threshold = <0x64>;
+							big_min = <0x1e26c0>;
+							lit_min = <0x143bb0>;
+							mif = <0xf78f0>;
+						};
+
+						level_1 {
+							threshold = <0xc8>;
+							big_min = <0x215340>;
+							lit_min = <0x176830>;
+							mif = <0x14a140>;
+						};
+					};
+				};
 			};
 
 			dc_vibrator {

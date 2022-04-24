@@ -116,6 +116,7 @@ enum power_supply_ext_property {
 	POWER_SUPPLY_EXT_PROP_UPDATE_BATTERY_DATA,
 #endif
 	POWER_SUPPLY_EXT_PROP_ENABLE_HW_FACTORY_MODE,
+	POWER_SUPPLY_EXT_PROP_TTF_FULL_CAPACITY,
 };
 
 enum ic_type {
@@ -867,6 +868,7 @@ struct sec_battery_platform_data {
 	/* NO NEED TO BE CHANGED */
 	unsigned int pre_afc_input_current;
 	unsigned int pre_wc_afc_input_current;
+	unsigned int select_pd_input_current;
 	unsigned int store_mode_max_input_power;
 	unsigned int prepare_ta_delay;
 
