@@ -303,6 +303,9 @@ config DTBO_A51
 config DTBO_M21
         bool "Samsung Galaxy M21 dtbo"
 
+config DTBO_M31S
+        bool "Samsung Galaxy M31S dtbo"
+
 endchoice
 
 endmenu

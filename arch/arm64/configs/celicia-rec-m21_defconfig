@@ -426,6 +426,7 @@ CONFIG_ARCH_EXYNOS9=y
 #
 # CONFIG_DTBO_A51 is not set
 CONFIG_DTBO_M21=y
+# CONFIG_DTBO_M31S is not set
 
 #
 # Bus support
